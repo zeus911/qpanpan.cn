@@ -1,0 +1,22 @@
+﻿@functions {
+
+    /// <summary>
+    /// http://static.qpanpan.cn
+    /// </summary>
+    /// <param name="path">请以"/"开头</param>
+    /// <returns></returns>
+    public static IHtmlString GetStaticUri(string path = null)
+    {
+        return new HtmlString(string.Format("{0}{1}", "http://static.qpanpan.cn", path));
+    }
+
+    /// <summary>
+    /// http://www.qpanpan.cn
+    /// </summary>
+    /// <param name="path">请以"/"开头</param>
+    /// <returns></returns>
+    public static IHtmlString GetMainUri(string path = null)
+    {
+        return new HtmlString(string.Format("{0}{1}", "http://www.qpanpan.cn", path));
+    }
+}

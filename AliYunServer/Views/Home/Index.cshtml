@@ -1,0 +1,58 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Index";
+}
+@model List<Models.AdminUser>
+
+@section scripts {
+    <script>
+        $(function () {
+            // 预加载
+            $('#time').text(getNowFormatDate());
+            setInterval(function () {
+                $('#time').text(getNowFormatDate());
+            }, 1000);
+            ticktime();
+            // 定时刷新
+            var sec = new Date().getSeconds();
+            setTimeout(function () {
+                $('#img').empty();
+                ticktime();
+                setInterval(function () {
+                    $('#img').empty();
+                    ticktime();
+                }, 60 * 1000);
+            }, (60 - sec) * 1000);
+        });
+
+        function getNowFormatDate() {
+            var sep1 = "-";
+            var sep2 = ":";
+            var date = new Date();
+            var month = getPrefix(date.getMonth() + 1);
+            var strDate = getPrefix(date.getDate());
+            var currentdate = date.getFullYear() + sep1 + month + sep1 + strDate
+                    + " " + date.getHours() + sep2 + date.getMinutes()
+                    + sep2 + getPrefix(date.getSeconds());
+            return currentdate;
+        }
+
+        function ticktime() {
+            var date = new Date();
+            $('#img').append('<img src="http://panpan.b0.upaiyun.com/images/mm/'
+                + getPrefix(date.getHours()) + '_'
+                + getPrefix(date.getMinutes()) + '.jpg" />');
+        }
+
+        function getPrefix(value) {
+            return value < 10 ? '0' + value : value;
+        }
+    </script>
+}
+
+@{
+    for (int i = 0; i < 100; i++)
+    {
+        <p>@i</p>
+    }
+}
