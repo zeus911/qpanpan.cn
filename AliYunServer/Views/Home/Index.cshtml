@@ -32,16 +32,17 @@
             var month = getPrefix(date.getMonth() + 1);
             var strDate = getPrefix(date.getDate());
             var currentdate = date.getFullYear() + sep1 + month + sep1 + strDate
-                    + " " + date.getHours() + sep2 + date.getMinutes()
+                    + " " + getPrefix(date.getHours()) + sep2 + getPrefix(date.getMinutes())
                     + sep2 + getPrefix(date.getSeconds());
             return currentdate;
         }
 
         function ticktime() {
             var date = new Date();
-            $('#img').append('<img src="http://panpan.b0.upaiyun.com/images/mm/'
+            var img = 'http://static.qpanpan.cn/images/mm/'
                 + getPrefix(date.getHours()) + '_'
-                + getPrefix(date.getMinutes()) + '.jpg" />');
+                + getPrefix(date.getMinutes()) + '.jpg';
+            $('#img').attr('src', img);
         }
 
         function getPrefix(value) {
@@ -50,9 +51,19 @@
     </script>
 }
 
-@{
-    for (int i = 0; i < 100; i++)
-    {
-        <p>@i</p>
-    }
-}
+
+<!--图片区-->
+<div class="container" style="margin-top: 10px;">
+    <div class="row">
+        <div class="col-sm-12">
+            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner" role="listbox">
+                    <div class="item active">
+                        <p class="text-center" id="time"></p>
+                        <img class="center-block" id="img" src="http://panpan.b0.upaiyun.com/images/mm/18_33.jpg" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

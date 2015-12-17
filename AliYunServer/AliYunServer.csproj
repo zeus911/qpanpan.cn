@@ -134,6 +134,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\CameraController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -141,13 +142,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="404.shtml" />
     <None Include="htmls\foot.cshtml" />
     <None Include="htmls\head.cshtml" />
     <Content Include="Global.asax" />
     <Content Include="App_Code\UIHelper.cshtml" />
-    <Content Include="index.shtml" />
-    <Content Include="404.shtml" />
     <Content Include="htmls\nav.cshtml" />
+    <Content Include="index.shtml" />
     <None Include="Properties\PublishProfiles\aliyun.pubxml" />
     <None Include="Properties\PublishProfiles\qpanpan.pubxml" />
     <Content Include="libs\log4net.dll" />
@@ -163,6 +164,7 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Camera\TakePicture.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

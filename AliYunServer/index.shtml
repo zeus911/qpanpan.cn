@@ -1,4 +1,4 @@
-﻿<!--#include file="/htmls/head.cshtml"-->
+<!--#include file="/htmls/head.cshtml"-->
     <title>QPANPAN</title>
     <link rel="stylesheet" href="http://static.qpanpan.cn/Scripts/css/nprogress.css">
     <link rel="stylesheet" href="http://static.qpanpan.cn/Scripts/css/index.css">

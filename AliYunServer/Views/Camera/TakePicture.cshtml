@@ -1,0 +1,93 @@
+﻿@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "拍照";
+}
+@section scripts {
+    <script>
+        // Put event listeners into place
+        window.addEventListener("DOMContentLoaded", function () {
+            // Grab elements, create settings, etc.
+            var canvas = document.getElementById("canvas"),
+                context = canvas.getContext("2d"),
+                video = document.getElementById("video"),
+                videoObj = { "video": true },
+                errBack = function (error) {
+                    console.log("Video capture error: ", error.code);
+                };
+
+            // Put video listeners into place
+            if (navigator.getUserMedia) { // Standard
+                navigator.getUserMedia(videoObj, function (stream) {
+                    video.src = stream;
+                    video.play();
+                }, errBack);
+            } else if (navigator.webkitGetUserMedia) { // WebKit-prefixed
+                navigator.webkitGetUserMedia(videoObj, function (stream) {
+                    video.src = window.URL.createObjectURL(stream);
+                    video.play();
+                }, errBack);
+            } else if (navigator.mozGetUserMedia) { // WebKit-prefixed
+                navigator.mozGetUserMedia(videoObj, function (stream) {
+                    video.src = window.URL.createObjectURL(stream);
+                    video.play();
+                }, errBack);
+            }
+
+            // Trigger photo take
+            $('#snap').click(function () {
+                context.drawImage(video, 0, 0, 640, 480);
+            });
+            $('#clear').click(function () {
+                context.clearRect(0, 0, 640, 480);
+            });
+            $('#upload').click(function () {
+                $('#upload').attr('disabled', "true");
+                var canvans = document.getElementById("canvas");
+                //获取浏览器页面的画布对象
+                var imgData = canvans.toDataURL();
+                //将图像转换为base64数据
+                var base64Data = imgData.substr(22);
+                //在前端截取22位之后的字符串作为图像数据
+                //开始异步上传
+                $.ajax({
+                    type: 'post', url: '/Camera/SaveImage', data: {
+                        'image': base64Data
+                    },
+                    success: function (res) {
+                        switch (res.status) {
+                            case 'ok':
+                                $('#pic').show().attr('href', res.msg);
+                                break;
+                            case 'error':
+                                alert(res.msg);
+                                break;
+                            default:
+                                alert('未知状态码' + res.status);
+                        }
+                        $('#upload').removeAttr("disabled");
+                    }
+                });
+            });
+        }, false);
+    </script>
+}
+
+<div class="container" style="margin-top: 10px;">
+    <div class="row">
+        <div class="col-sm-12">
+            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner" role="listbox">
+                    <div class="item active">
+                        <video id="video" width="640" height="480" autoplay="autoplay"></video>
+                        <button class="btn btn-success" id="snap">拍照</button>
+                        <button class="btn btn-info" id="clear">清除</button>
+                        <button class="btn btn-primary" id="upload">上传</button>
+                        <a href="#" id="pic" hidden="hidden">看图</a>
+                        <br />
+                        <canvas id="canvas" width="640" height="480"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
