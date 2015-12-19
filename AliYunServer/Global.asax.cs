@@ -40,16 +40,16 @@ namespace AliYunServer
             routes.MapRoute(
                 "Default",
                 "{controller}/{action}/{id}",
-                new { controller = "Home", action = "Index", id = "" }
+                new { controller = "Home", action = "Attribution", id = "" }
               );
         }
 
         protected void Application_BeginRequest()
         {
-            if (Request.Url.AbsolutePath == "/")
-            {
-                Context.RewritePath("~/index.shtml");
-            }
+            //if (Request.Url.AbsolutePath == "/")
+            //{
+            //    Context.RewritePath("~/index.shtml");
+            //}
         }
 
         protected void Application_Error()

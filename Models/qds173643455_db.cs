@@ -25,6 +25,7 @@ namespace Models
         public virtual DbSet<RolePower> RolePower { get; set; }
         public virtual DbSet<Role> Role { get; set; }
         public virtual DbSet<Segment> Segment { get; set; }
+        public virtual DbSet<IdentityCardNumberAttribution> IdentityCardNumberAttribution { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -178,6 +179,9 @@ namespace Models
             modelBuilder.Entity<Segment>()
                 .Property(e => e.Note)
                 .IsUnicode(false);
+
+            modelBuilder.Entity<IdentityCardNumberAttribution>()
+                .Property(e => e.Id);
         }
     }
 }

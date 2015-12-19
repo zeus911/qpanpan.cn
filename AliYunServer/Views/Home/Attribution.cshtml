@@ -1,0 +1,75 @@
+﻿@{
+    ViewBag.Title = "身份证号码归属地查询";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section scripts {
+    <script>
+        $(function () {
+            $('body').bind('ajaxSend', function () {
+                $('#loading').show();
+            }).bind('ajaxComplete', function () {
+                $('#loading').hide();
+            }).bind('error', function () {
+                showMsg('与服务器连接失败！');
+            });
+            $('#loading').hide();
+
+            $('#btnSearch').click(function () {
+                var reg = /\d{6}/g;
+                var identity = $('#identity').val();
+                var regIdentity = reg.exec(identity);
+                if (identity.length !== 6 || !regIdentity) {
+                    showMsg('输入不合法');
+                    return;
+                }
+                $('#btnSearch').attr('disabled', true);
+                $.ajax({
+                    type: 'POST',
+                    url: '/Home/GetAttribution',
+                    data: {
+                        identity: regIdentity[0]
+                    },
+                    success: function (result) {
+                        showMsg(result.Message);
+                    }
+                });
+            });
+
+            $('#identity').focus(function () {
+                $('#msg').hide();
+                $('#btnSearch').attr('disabled', false);
+            });
+
+            $('body').keydown(function (e) {
+                e = e || event;
+                var keycode = e.which || e.keyCode;
+                if (keycode === 13) {
+                    $("#btnSearch").click();
+                    return false;
+                }
+            });
+        });
+
+        var showMsg = function (msg) {
+            $('#msg').text(msg).show();
+        }
+    </script>
+}
+
+<div class="container" style="margin-top: 10px;">
+    <div class="row">
+        <div class="col-sm-12">
+            <h3 class="stay">身份证号码归属地查询</h3>
+            <!-- Form -->
+            <form class="form-inline">
+                <div class="form-group">
+                    <input id="identity" type="number" min="100000" class="form-control input-lg" placeholder="输入身份证号码前6位">
+                </div>
+                <button id="btnSearch" type="button" class="btn btn-primary btn-lg">查询</button>
+                <p id="msg" style="display: none; color: red;">输入错误</p>
+                <img id="loading" src="@UIHelper.GetStaticUri("/images/loading.gif")" />
+            </form>
+            <!-- End From -->
+        </div>
+    </div>
+</div>
