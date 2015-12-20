@@ -5,7 +5,6 @@ namespace Models
     public class IdentityCardNumberAttribution
     {
         [Key]
-        [Required]
         public int Id { get; set; }
 
         [Required]

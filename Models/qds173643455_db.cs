@@ -26,6 +26,9 @@ namespace Models
         public virtual DbSet<Role> Role { get; set; }
         public virtual DbSet<Segment> Segment { get; set; }
         public virtual DbSet<IdentityCardNumberAttribution> IdentityCardNumberAttribution { get; set; }
+        public virtual DbSet<Geographical> Geographical { get; set; }
+        public virtual DbSet<Region> Region { get; set; }
+        public virtual DbSet<LicensePlate> LicensePlate { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -138,7 +141,7 @@ namespace Models
 
             modelBuilder.Entity<NewsCategory>()
                 .HasMany(e => e.News)
-                .WithRequired(e => e.NewsCategorie)
+                .WithRequired(e => e.NewsCategory)
                 .HasForeignKey(e => e.NewsCategoryID)
                 .WillCascadeOnDelete(false);
 
@@ -180,8 +183,32 @@ namespace Models
                 .Property(e => e.Note)
                 .IsUnicode(false);
 
+
+
             modelBuilder.Entity<IdentityCardNumberAttribution>()
-                .Property(e => e.Id);
+                .Property(e => e.Attribution)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Geographical>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+            modelBuilder.Entity<Geographical>()
+                .Property(e => e.FullName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Region>()
+                .Property(e => e.FullName)
+                .IsUnicode(false);
+            modelBuilder.Entity<Region>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<LicensePlate>()
+                .Property(e => e.Code)
+                .IsUnicode(false);
+            modelBuilder.Entity<LicensePlate>()
+                .Property(e => e.Area)
+                .IsUnicode(false);
         }
     }
 }

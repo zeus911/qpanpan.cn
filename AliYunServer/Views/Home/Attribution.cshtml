@@ -2,6 +2,10 @@
     ViewBag.Title = "身份证号码归属地查询";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+@using Models;
+@model List<Models.Region>
+
 @section scripts {
     <script>
         $(function () {
@@ -13,6 +17,9 @@
                 showMsg('与服务器连接失败！');
             });
             $('#loading').hide();
+            $('#loading1').hide();
+            $('#loading2').hide();
+            $('#area').hide();
 
             $('#btnSearch').click(function () {
                 var reg = /\d{6}/g;
@@ -40,7 +47,7 @@
                 $('#btnSearch').attr('disabled', false);
             });
 
-            $('body').keydown(function (e) {
+            $('#identity').keydown(function (e) {
                 e = e || event;
                 var keycode = e.which || e.keyCode;
                 if (keycode === 13) {
@@ -52,24 +59,100 @@
 
         var showMsg = function (msg) {
             $('#msg').text(msg).show();
+        };
+
+        var getAlpha = function (regionId) {
+            $.ajax({
+                type: 'POST',
+                url: '/Home/GetCode',
+                data: {
+                    regionId: regionId
+                },
+                success: function (result) {
+                    var codes = result.Codes;
+                    for (var i = 0; i < codes.length; i++) {
+                        $('#code').append('<li><a onclick="$(\'#alpha\').text(\'' + codes[i] + '\');$(\'#area\').hide();getAddr($(\'#regionUI\').text(),\'' + codes[i] + '\')">' + codes[i] + '</a></li>');
+                    }
+                }
+            });
+        };
+
+        var getAddr = function (region, code) {
+            $.ajax({
+                type: 'POST', url: '/Home/GetArea',
+                data: {
+                    regionName: region, code: code
+                },
+                success: function (result) {
+                    $('#area').show();
+                    $('#area div span').text(result.Area);
+                }
+            });
         }
     </script>
 }
 
-<div class="container" style="margin-top: 10px;">
-    <div class="row">
-        <div class="col-sm-12">
-            <h3 class="stay">身份证号码归属地查询</h3>
-            <!-- Form -->
-            <form class="form-inline">
-                <div class="form-group">
+<div class="jumbotron">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h3 class="stay">身份证号码归属地查询</h3>
+                <div class="input-group">
                     <input id="identity" type="number" min="100000" class="form-control input-lg" placeholder="输入身份证号码前6位">
+                    <span class="input-group-btn">
+                        <button id="btnSearch" type="button" class="btn btn-primary btn-lg">查询</button>
+                    </span>
                 </div>
-                <button id="btnSearch" type="button" class="btn btn-primary btn-lg">查询</button>
                 <p id="msg" style="display: none; color: red;">输入错误</p>
                 <img id="loading" src="@UIHelper.GetStaticUri("/images/loading.gif")" />
-            </form>
-            <!-- End From -->
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <h3 class="stay">车牌归属地查询</h3>
+                <div class="bs-example" data-example-id="split-button-dropdown">
+                    <div class="btn-group">
+                        <button type="button" id="regionUI" class="btn btn-default">省、市</button>
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            @{
+                                foreach (Region region in Model)
+                                {
+                                    <li onclick="$('#regionUI').text('@region.Name');$('#code').html('');$('#area').hide();getAlpha(@region.Id);"><a>@Html.Raw(string.Format("<span class=\"label label-danger\">{0}</span> {1}", region.Name, region.FullName))</a></li>
+                                }
+                            }
+                            @*<li><a href="#">Action</a></li>
+                                <li><a href="#">Another action</a></li>
+                                <li><a href="#">Something else here</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="#">Separated link</a></li>*@
+                        </ul>
+                    </div><!-- /btn-group -->
+                    <div class="btn-group">
+                        <button type="button" id="alpha" class="btn btn-primary">字母</button>
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul id="code" class="dropdown-menu">
+                            @*<li><a href="#">Action</a></li>
+                                <li><a href="#">Another action</a></li>
+                                <li><a href="#">Something else here</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="#">Separated link</a></li>*@
+                        </ul>
+                    </div><!-- /btn-group -->
+                </div>
+            </div>
+            <div id="area" class="col-lg-12">
+                <div class="alert alert-success" role="alert">
+                    <p><span></span></p>
+                </div>
+            </div>
         </div>
     </div>
 </div>

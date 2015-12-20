@@ -20,6 +20,6 @@ namespace Models
 
         public long NewsCategoryID { get; set; }
 
-        public virtual NewsCategory NewsCategorie { get; set; }
+        public virtual NewsCategory NewsCategory { get; set; }
     }
 }
