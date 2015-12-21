@@ -38,7 +38,7 @@ namespace AliYunServer.Controllers
                 return Json(new
                 {
                     status = "ok",
-                    msg = "http://static.qpanpan.cn " + file,
+                    msg = "http://static.qpanpan.cn" + file,
                 });
             }
             catch (Exception ex)
@@ -49,6 +49,12 @@ namespace AliYunServer.Controllers
                     msg = ex.Message,
                 });
             }
+        }
+
+        [HttpGet]
+        public ViewResult Exhibition()
+        {
+            return View();
         }
     }
 }

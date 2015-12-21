@@ -13,10 +13,7 @@ namespace AliYunServer.Controllers
         [HttpGet]
         public ViewResult Index()
         {
-            var admins = from admin in Db.AdminUser
-                         select admin;
-
-            return View(admins.ToList());
+            return View();
         }
 
         [HttpGet]
