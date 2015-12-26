@@ -8,20 +8,21 @@
 
 @section scripts {
     <script>
-        $(function () {
-            $('body').bind('ajaxSend', function () {
-                $('#loading').show();
-            }).bind('ajaxComplete', function () {
-                $('#loading').hide();
-            }).bind('error', function () {
-                showMsg('与服务器连接失败！');
-            });
+        $('body').bind('ajaxSend', function() {
+            $('#loading').show();
+        }).bind('ajaxComplete', function() {
+            $('#loading').hide();
+        }).bind('error', function() {
+            showMsg('与服务器连接失败！');
+        });
+
+        $(function() {
             $('#loading').hide();
             $('#loading1').hide();
             $('#loading2').hide();
             $('#area').hide();
 
-            $('#btnSearch').click(function () {
+            $('#btnSearch').click(function() {
                 var reg = /\d{6}/g;
                 var identity = $('#identity').val();
                 var regIdentity = reg.exec(identity);
@@ -36,18 +37,18 @@
                     data: {
                         identity: regIdentity[0]
                     },
-                    success: function (result) {
+                    success: function(result) {
                         showMsg(result.Message);
                     }
                 });
             });
 
-            $('#identity').focus(function () {
+            $('#identity').focus(function() {
                 $('#msg').hide();
                 $('#btnSearch').attr('disabled', false);
             });
 
-            $('#identity').keydown(function (e) {
+            $('#identity').keydown(function(e) {
                 e = e || event;
                 var keycode = e.which || e.keyCode;
                 if (keycode === 13) {
@@ -55,20 +56,28 @@
                     return false;
                 }
             });
+
+            $('#btnGo').click(function() {
+                var collect = $('#collect').val();
+                if (collect == null || collect.length <= 0) {
+                    return;
+                }
+                getQrCode(collect);
+            });
         });
 
-        var showMsg = function (msg) {
+        var showMsg = function(msg) {
             $('#msg').text(msg).show();
         };
 
-        var getAlpha = function (regionId) {
+        var getAlpha = function(regionId) {
             $.ajax({
                 type: 'POST',
                 url: '/Home/GetCode',
                 data: {
                     regionId: regionId
                 },
-                success: function (result) {
+                success: function(result) {
                     var codes = result.Codes;
                     for (var i = 0; i < codes.length; i++) {
                         $('#code').append('<li><a onclick="$(\'#alpha\').text(\'' + codes[i] + '\');$(\'#area\').hide();getAddr($(\'#regionUI\').text(),\'' + codes[i] + '\')">' + codes[i] + '</a></li>');
@@ -77,18 +86,36 @@
             });
         };
 
-        var getAddr = function (region, code) {
+        var getAddr = function(region, code) {
             $.ajax({
-                type: 'POST', url: '/Home/GetArea',
+                type: 'POST',
+                url: '/Home/GetArea',
                 data: {
-                    regionName: region, code: code
+                    regionName: region,
+                    code: code
                 },
-                success: function (result) {
+                success: function(result) {
                     $('#area').show();
                     $('#area div span').text(result.Area);
                 }
             });
-        }
+        };
+
+        var getQrCode = function(content) {
+            $.ajax({
+                type: 'POST',
+                url: '/Home/CreateQrCode',
+                data: {
+                    content: content,
+                },
+                success: function(result) {
+                    if (result.Status === 'ok') {
+                        $('#qrcode').attr('src', result.Url);
+                    }
+                }
+
+            });
+        };
     </script>
 }
 
@@ -151,6 +178,23 @@
             <div id="area" class="col-lg-12">
                 <div class="alert alert-success" role="alert">
                     <p><span></span></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <h3 class="stay">二维码生成</h3>
+                <div class="input-group">
+                    <input id="collect" type="text" class="form-control input-lg" placeholder="输入文字内容，支持普通文本和网址！">
+                    <span class="input-group-btn">
+                        <button id="btnGo" type="button" class="btn btn-primary btn-lg">生成</button>
+                    </span>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="alert alert-success" role="alert">
+                    <img id="qrcode" />
                 </div>
             </div>
         </div>

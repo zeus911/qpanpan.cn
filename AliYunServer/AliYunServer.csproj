@@ -47,6 +47,10 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Gma.QrCodeNet.Encoding, Version=0.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\QrCode.Net.0.4.0.0\lib\net45\Gma.QrCodeNet.Encoding.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
       <Private>True</Private>
@@ -139,19 +143,23 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="404.shtml" />
-    <None Include="htmls\foot.cshtml" />
-    <None Include="htmls\head.cshtml" />
+    <None Include="cshtmls\foot.cshtml" />
+    <None Include="cshtmls\head.cshtml" />
     <Content Include="Global.asax" />
     <Content Include="App_Code\UIHelper.cshtml" />
-    <Content Include="htmls\nav.cshtml" />
-    <Content Include="index.shtml" />
+    <Content Include="cshtmls\nav.cshtml" />
+    <Content Include="htmls\foot.html" />
+    <Content Include="htmls\head.html" />
+    <Content Include="htmls\nav.html" />
     <None Include="Properties\PublishProfiles\aliyun.pubxml" />
     <None Include="Properties\PublishProfiles\qpanpan.pubxml" />
     <None Include="Views\Camera\Exhibition.cshtml" />
+    <None Include="shtml\lyt\3A2B5965-0AA8-4AF3-B7E4-10FFB00A10FD.shtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

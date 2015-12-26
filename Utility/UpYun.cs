@@ -365,6 +365,23 @@ namespace Utility
         }
 
         /// <summary>
+        /// 计算流的MD5值
+        /// </summary>
+        public static string StreamMd5(Stream stream)
+        {
+            return BytesMd5(StreamToBytes(stream));
+        }
+
+        public static byte[] StreamToBytes(Stream stream)
+        {
+            // 设置当前流的位置为流的开始
+            stream.Seek(0, SeekOrigin.Begin);
+            byte[] buffer = new byte[stream.Length];
+            stream.Read(buffer, 0, (int)stream.Length);
+            return buffer;
+        }
+
+        /// <summary>
         /// 计算字节数组的MD5值
         /// </summary>
         public static string BytesMd5(byte[] buffer)
