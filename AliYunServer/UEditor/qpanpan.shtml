@@ -1,0 +1,81 @@
+﻿<!--#include file="/htmls/head.html"-->
+<title>代码编辑器</title>
+<!-- 配置文件 -->
+<script src="http://static.qpanpan.cn/UEditor/third-party/zeroclipboard/ZeroClipboard.js"></script>
+<script>
+    window.UEDITOR_HOME_URL = "http://www.qpanpan.cn/UEditor/";
+</script>
+<script src="http://static.qpanpan.cn/UEditor/ueditor.config.js"></script>
+<!-- 编辑器源码文件 -->
+<script src="http://static.qpanpan.cn/UEditor/ueditor.all.min.js"> </script>
+<script src="http://static.qpanpan.cn/UEditor/lang/zh-cn/zh-cn.js"></script>
+<script>
+    $(function () {
+        $('#btnUpload').click(function () {
+            var title = $('#title').val();
+            var note = ue.getContent();
+            if (title.length <= 0 || note.length <= 0) {
+                return;
+            }
+            $.ajax({
+                type: 'POST', url: '/Note/Index',
+                data: {
+                    title: title,
+                    note: note
+                },
+                success: function (result) {
+                    alert(result.Msg);
+                },
+                error: function () {
+                    alert('通讯错误！');
+                }
+            });
+        });
+
+        $('#btnSSI').click(function () {
+            $.ajax({
+                type: 'POST', url: '/Note/StaticPages',
+                success: function (result) {
+                    alert(result.Msg);
+                },
+                error: function () {
+                    alert('通讯错误！');
+                }
+            });
+        });
+    });
+</script>
+</head>
+<body>
+
+    <div class="container">
+        <div class="row col-md-12">
+            <div class="input-group">
+                <span class="input-group-addon">@</span>
+                <input type="text" class="form-control" placeholder="输入文章标题" id="title">
+            </div>
+        </div>
+    </div>
+
+    <div class="container" style="padding-top:10px;padding-bottom:10px;">
+        <div class="row col-md-12">
+            <!-- 加载编辑器的容器 -->
+            <script id="container" name="content" type="text/plain">
+            </script>
+        </div>
+    </div>
+
+    <!-- 实例化编辑器 -->
+    <script type="text/javascript">
+        var ue = UE.getEditor('container');
+    </script>
+
+    <div class="container" style="padding-top:10px;">
+        <div class="row col-md-2 col-lg-offset-5">
+            <button id="btnUpload" type="button" class="btn btn-primary btn-lg btn-block">上传</button>
+            <button id="btnSSI" type="button" class="btn btn-primary btn-lg btn-block">静态化</button>
+        </div>
+    </div>
+    <!--#include file="/htmls/foot.html"-->
+</body>
+</html>

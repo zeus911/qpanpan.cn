@@ -1,0 +1,37 @@
+﻿<!--#include file="/htmls/head.html"-->
+    <meta name="HandheldFriendly" content="true" />
+    <meta name="msvalidate.01" content="B6C713C1F4E407129EDEF7810A8B9BCB" />
+    <meta name="keywords" content="canvas,3D,perspective,texturing,gallery" />
+    <link rel="stylesheet" href="http://static.qpanpan.cn/Scripts/css/slider-wb.css"/>
+    <script src="http://static.qpanpan.cn/Scripts/js/ge1doot.js"></script>
+    <script src="http://static.qpanpan.cn/Scripts/js/3dImges.js"></script>
+    <script>
+        var array = [];
+        for (var i = 1; i <= 12; i++) {
+            array.push('lyt/' + i + '.JPG');
+        }
+        imgConfig3D(array);
+    </script>
+    <script src="http://static.qpanpan.cn/Scripts/js/imageTransform3D.js"></script>
+
+    <script>
+        $(function () {
+            $('canvas').siblings().hide();
+            $('body > ul').show();
+        });
+    </script>
+    <title>刘雨彤的3D相册</title>
+</head>
+<body>
+    <!--#include file="/htmls/nav.html"-->
+
+    <ul class="nav nav-pills">
+        <a class="glyphicon glyphicon-home" href="/Camera/TakePicture">Home</a>
+    </ul>
+
+    <!--图片区-->
+    <canvas style="cursor: move;" height="Me.Width / Screen.TwipsPerPixelX " width="Me.Height / Screen.TwipsPerPixelY" id="canvas"></canvas>
+
+    <!--#include file="/htmls/foot.html"-->
+</body>
+</html>

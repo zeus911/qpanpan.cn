@@ -55,14 +55,14 @@
                     },
                     success: function (res) {
                         switch (res.status) {
-                            case 'ok':
-                                $('#pic').show().attr('href', res.msg);
-                                break;
-                            case 'error':
-                                alert(res.msg);
-                                break;
-                            default:
-                                alert('未知状态码' + res.status);
+                        case 'ok':
+                            $('#pic').show().attr('href', res.msg);
+                            break;
+                        case 'error':
+                            alert(res.msg);
+                            break;
+                        default:
+                            alert('未知状态码' + res.status);
                         }
                         $('#upload').removeAttr("disabled");
                     }
@@ -83,7 +83,7 @@
                         <button class="btn btn-info" id="clear">清除</button>
                         <button class="btn btn-primary" id="upload">上传</button>
                         <a href="#" id="pic" hidden="hidden">看图</a>
-                        <br />
+                        <br/>
                         <canvas id="canvas" width="640" height="480"></canvas>
                     </div>
                 </div>
@@ -91,3 +91,21 @@
         </div>
     </div>
 </div>
+
+<input id="mobile" type="file" accept="image/*;capture=camera"/>
+<input id="btnMobile" type="button" value="上传"/>
+<script>
+    $(function() {
+        $('#btnMobile').click(function() {
+            $.ajax({
+                type: 'POST', url: '/Camera/SaveMobilePicture',
+                data: {
+                    image: $('#mobile').val()
+                },
+                success: function (result) {
+                    
+                }
+            });
+        });
+    });
+</script>

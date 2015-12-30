@@ -1,0 +1,31 @@
+<!--#include file="/htmls/head.html"-->
+<title>NPOI</title>
+</head>
+<body>
+    <main id="post-page" class="container mainContent" role="main">
+        <div class="row">
+            <div class="col-md-10 col-md-push-1">
+                <article class="panel post tag-promise tag-javascript">
+                    <header class="panel-heading post-header">
+                        <h1 class="post-title text-center">
+                            <span>NPOI</span>
+                        </h1>
+                        <h4 class="text-right" id="subtitle">发表日期：12/30/2015 23:42:31</h4>
+                    </header>
+                    <section id="articleBody" class="panel-body post-content">
+                        <p><img src="http://static.qpanpan.cn/upload/segment/2015/12/30/af71855234ee699074eb2ad7f50366b4.jpg" title="npoi.jpg" alt="npoi.jpg"/></p><br />
+                    </section>
+                    <section>
+                        <img src="" />
+                    </section>
+                    <section id="moreSiblings" class="panel-body post-content text-center">
+                        <a href="" class="btn btn-default">查看更多消息&gt;&gt;</a>
+                    </section>
+                </article>
+            </div>
+        </div>
+    </main>
+
+    <!--#include file="/htmls/foot.html"-->
+</body>
+</html>

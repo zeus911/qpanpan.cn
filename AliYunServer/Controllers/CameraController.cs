@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web;
 using System.Web.Mvc;
 using Utility;
 
@@ -55,6 +56,12 @@ namespace AliYunServer.Controllers
         public ViewResult Exhibition()
         {
             return View();
+        }
+
+        [HttpPost]
+        public JsonResult SaveMobilePicture(HttpPostedFile image)
+        {
+            return new JsonResult();
         }
     }
 }
