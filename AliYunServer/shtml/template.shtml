@@ -2,7 +2,9 @@
 <title>@title</title>
 </head>
 <body>
-    <main id="post-page" class="container mainContent" role="main">
+    <!--#include file="/htmls/nav.html"-->
+
+    <main class="container mainContent" role="main">
         <div class="row">
             <div class="col-md-10 col-md-push-1">
                 <article class="panel post tag-promise tag-javascript">
@@ -10,16 +12,23 @@
                         <h1 class="post-title text-center">
                             <span>@title</span>
                         </h1>
-                        <h4 class="text-right" id="subtitle">发表日期：@postdate</h4>
+                        <h4 class="text-right">发表日期：@postdate</h4>
                     </header>
-                    <section id="articleBody" class="panel-body post-content">
-                        @article<br />
+                    <section class="panel-body post-content">
+                        <div style="width:98%">
+                            <div style="width:auto; overflow:auto;">
+                                <div class="tab-content">
+                                    <div class="tab-pane active">
+                                        @article<br />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="clear:both"></div>
                     </section>
-                    <section>
-                        <img src="" />
-                    </section>
-                    <section id="moreSiblings" class="panel-body post-content text-center">
-                        <a href="" class="btn btn-default">查看更多消息&gt;&gt;</a>
+                    <section class="panel-body post-content text-center">
+                        <a href="/shtml/heart/@last.shtml" class="btn btn-default">上一篇&lt;&lt;</a>
+                        <a href="/shtml/heart/@next.shtml" class="btn btn-default">下一篇&gt;&gt;</a>
                     </section>
                 </article>
             </div>

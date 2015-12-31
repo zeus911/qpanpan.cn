@@ -1,0 +1,88 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "代码编辑器";
+}
+@model Models.News
+
+@section scripts {
+    <!-- 配置文件 -->
+    <script src="http://static.qpanpan.cn/UEditor/third-party/zeroclipboard/ZeroClipboard.js"></script>
+    <script>
+        window.UEDITOR_HOME_URL = "http://www.qpanpan.cn/UEditor/";
+    </script>
+    <script src="http://static.qpanpan.cn/UEditor/ueditor.config.js"></script>
+    <!-- 编辑器源码文件 -->
+    <script src="http://static.qpanpan.cn/UEditor/ueditor.all.min.js"> </script>
+    <script src="http://static.qpanpan.cn/UEditor/lang/zh-cn/zh-cn.js"></script>
+    <script>
+        $(function () {
+            $('#btnUpdate').click(function () {
+                var title = $('#title').val();
+                var note = ue.getContent();
+                if (title.length <= 0 || note.length <= 0) {
+                    return;
+                }
+                $.ajax({
+                    type: 'POST', url: '/Note/Update',
+                    data: {
+                        id: '@Model.ID',
+                        title: title,
+                        note: note
+                    },
+                    success: function (result) {
+                        alert(result.Msg);
+                    },
+                    error: function () {
+                        alert('通讯错误！');
+                    }
+                });
+            });
+
+            $('#btnSSI').click(function () {
+                $.ajax({
+                    type: 'POST', url: '/Note/StaticPages',
+                    success: function (result) {
+                        alert(result.Msg);
+                    },
+                    error: function () {
+                        alert('通讯错误！');
+                    }
+                });
+            });
+        });
+    </script>
+}
+
+@section styles {
+
+}
+
+<div class="container">
+    <div class="row col-md-12">
+        <div class="input-group">
+            <span class="input-group-addon">@@</span>
+            <input type="text" class="form-control" placeholder="输入文章标题" id="title" value="@Model.Title">
+        </div>
+    </div>
+</div>
+
+<div class="container" style="padding-top:10px;padding-bottom:10px;">
+    <div class="row col-md-12">
+        <!-- 加载编辑器的容器 -->
+        <script id="container" name="content" type="text/plain">
+            @Html.Raw(Model.Article)
+        </script>
+    </div>
+</div>
+
+<!-- 实例化编辑器 -->
+<script type="text/javascript">
+    var ue = UE.getEditor('container');
+</script>
+
+<div class="container" style="padding-top:10px;">
+    <div class="row col-md-2 col-lg-offset-5">
+        <button id="btnUpdate" type="button" class="btn btn-primary btn-lg btn-block">更新</button>
+        <button id="btnSSI" type="button" class="btn btn-primary btn-lg btn-block">静态化</button>
+    </div>
+</div>

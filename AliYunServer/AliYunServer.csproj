@@ -168,6 +168,7 @@
     <Content Include="htmls\nav.html" />
     <None Include="Properties\PublishProfiles\aliyun.pubxml" />
     <None Include="Properties\PublishProfiles\qpanpan.pubxml" />
+    <Content Include="shtml\newslist.shtml" />
     <None Include="UEditor\qpanpan.shtml" />
     <None Include="shtml\template.shtml" />
     <Content Include="UEditor\net\config.json" />
@@ -276,6 +277,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Camera\TakePicture.cshtml" />
     <None Include="Views\Home\Attribution.cshtml" />
+    <None Include="Views\Note\Qpanpan.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
