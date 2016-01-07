@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -9,11 +9,12 @@ using Models;
 
 namespace AliYunServer.Controllers
 {
+    [Authorize]
     public class NoteController : BaseController
     {
         [ValidateInput(false)]
         [HttpPost]
-        public JsonResult Index(string title, string note)
+        public JsonResult Index(string title, string note, long categoryId)
         {
             News news = new News()
             {
@@ -21,7 +22,7 @@ namespace AliYunServer.Controllers
                 Title = title,
                 Article = note,
                 PostDateTime = DateTime.Now,
-                NewsCategoryID = 2,
+                NewsCategoryID = categoryId,
             };
             Db.News.Add(news);
             Db.Entry(news).State = EntityState.Added;
@@ -45,24 +46,67 @@ namespace AliYunServer.Controllers
                 html = reader.ReadToEnd();
             }
 
-            int count = Db.News.Count();
-            int index = 1;
-            foreach (News @new in Db.News)
+
+            foreach (IGrouping<long, News> news in Db.News.GroupBy(n => n.NewsCategoryID))
             {
-                int last = Math.Max(1, index - 1);
-                int next = Math.Min(count, index + 1);
-                string temp = html.Replace("@title", @new.Title)
-                            .Replace("@postdate", @new.PostDateTime.ToString())
-                            .Replace("@article", @new.Article)
-                            .Replace("@last", last.ToString()).Replace("@next", next.ToString());
                 // ReSharper disable once AssignNullToNotNullAttribute
-                string file = Path.Combine(Path.GetDirectoryName(template), "heart", index + ".shtml");
-                using (Stream stream = System.IO.File.OpenWrite(file))
+                string directory = Path.Combine(Path.GetDirectoryName(template), "heart", news.Key.ToString());
+                if (!Directory.Exists(directory))
                 {
-                    byte[] buffer = Encoding.UTF8.GetBytes(temp);
-                    stream.Write(buffer, 0, buffer.Length);
+                    Directory.CreateDirectory(directory);
                 }
-                index++;
+
+                IEnumerable<News> groupNews = news.Select(n => n);
+                int index = 0;
+                int count = groupNews.Count();
+                foreach (News @new in groupNews)
+                {
+                    //long last = Math.Max(groupNews.ElementAt(0).ID, groupNews.ElementAt().ID);
+                    //if (last == index)
+                    //{
+                    //    last = groupNews.Last().ID;
+                    //}
+                    //long next = Math.Min(count, index + 1);
+                    //if (next == index)
+                    //{
+                    //    next = groupNews.First().ID;
+                    //}
+                    long last, next;
+                    if (index == 0)
+                    {
+                        last = groupNews.Last().ID;
+                        next = groupNews.ElementAt(index + 1).ID;
+                    }
+                    else if (index == count - 1)
+                    {
+                        last = groupNews.ElementAt(index - 1).ID;
+                        next = groupNews.First().ID;
+                    }
+                    else
+                    {
+                        last = groupNews.ElementAt(index - 1).ID;
+                        next = groupNews.ElementAt(index + 1).ID;
+                    }
+                    string temp = html.Replace("@title", @new.Title)
+                                        .Replace("@postdate", @new.PostDateTime.ToString())
+                                        .Replace("@article", @new.Article)
+                                        .Replace("@category", news.Key.ToString())
+                                        .Replace("@last", last.ToString()).Replace("@next", next.ToString());
+
+                    string file = Path.Combine(directory, @new.ID + ".shtml");
+
+                    if (System.IO.File.Exists(file))
+                    {
+                        System.IO.File.Delete(file);
+                    }
+
+                    using (Stream stream = System.IO.File.OpenWrite(file))
+                    {
+                        byte[] buffer = Encoding.UTF8.GetBytes(temp);
+                        stream.Write(buffer, 0, buffer.Length);
+                    }
+                    index++;
+                }
             }
 
             return Json(new { Msg = "搞定！" });
@@ -78,7 +122,7 @@ namespace AliYunServer.Controllers
             }
             return View(news);
         }
-
+        
         [ValidateInput(false)]
         [HttpPost]
         public JsonResult Update(int id, string title, string note)

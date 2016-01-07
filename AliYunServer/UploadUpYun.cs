@@ -18,7 +18,6 @@ namespace AliYunServer
 
         private string UpYunPath { get; set; }
 
-        /// <param name="upYunPath">格式：/upload/2015   最深10级目录</param>
         public UploadUpYun(UploadResult result, string upYunPath)
         {
             this.Result = result;
@@ -30,14 +29,10 @@ namespace AliYunServer
             object model;
             try
             {
-                //string fileMd5 = CommonHelper.CalcMd5(uploadFileBytes);                 // 上传图片的md5值
                 string fileMd5 = UpYun.BytesMd5(uploadFileBytes);
-                //string bucket = ConfigurationManager.AppSettings["UpYun_bucket"];       // 空间名称
-                //string username = ConfigurationManager.AppSettings["UpYun_username"];   // 操作员
-                //string password = ConfigurationManager.AppSettings["UpYun_password"];   // 密码
-                string bucket = "panpan";
-                string username = "panpan";
-                string password = "panpan88";
+                string bucket = "panpan";       // 空间名称
+                string username = "panpan";     // 操作员
+                string password = "panpan88";   // 密码
 
 
                 UpYun upyun = new UpYun(bucket, username, password);

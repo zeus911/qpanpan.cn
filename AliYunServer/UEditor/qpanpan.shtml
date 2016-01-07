@@ -14,14 +14,16 @@
         $('#btnUpload').click(function () {
             var title = $('#title').val();
             var note = ue.getContent();
-            if (title.length <= 0 || note.length <= 0) {
+            var categoryId = $('#select').attr('categoryid');
+            if (title.length <= 0 || note.length <= 0 || categoryId==null) {
                 return;
             }
             $.ajax({
                 type: 'POST', url: '/Note/Index',
                 data: {
                     title: title,
-                    note: note
+                    note: note,
+                    categoryId: categoryId
                 },
                 success: function (result) {
                     alert(result.Msg);
@@ -71,9 +73,22 @@
     </script>
 
     <div class="container" style="padding-top:10px;">
-        <div class="row col-md-2 col-lg-offset-5">
-            <button id="btnUpload" type="button" class="btn btn-primary btn-lg btn-block">上传</button>
-            <button id="btnSSI" type="button" class="btn btn-primary btn-lg btn-block">静态化</button>
+        <div class="row">
+            <div class="btn-group col-md-2">
+                <button type="button" id="select" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    选择所属类别 <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a href="javascript:$('#select').text('风景图片').attr('categoryId', '2');">风景图片</a></li>
+                    <li><a href="javascript:$('#select').text('常用代码').attr('categoryId', '3');">常用代码</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <button id="btnUpload" type="button" class="btn btn-primary btn-lg btn-block">上传</button>
+            </div>
+            <div class="col-md-4">
+                <button id="btnSSI" type="button" class="btn btn-primary btn-lg btn-block">静态化</button>
+            </div>
         </div>
     </div>
     <!--#include file="/htmls/foot.html"-->

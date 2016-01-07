@@ -1,4 +1,5 @@
-﻿<!--#include file="/htmls/head.html"-->
+<!--#include file="/htmls/head.html"-->
+
 <title>@title</title>
 </head>
 <body>
@@ -18,8 +19,7 @@
                         <div style="width:98%">
                             <div style="width:auto; overflow:auto;">
                                 <div class="tab-content">
-                                    <div class="tab-pane active">
-                                        @article<br />
+                                    <div class="tab-pane active">@article<br />
                                     </div>
                                 </div>
                             </div>
@@ -27,8 +27,8 @@
                         <div style="clear:both"></div>
                     </section>
                     <section class="panel-body post-content text-center">
-                        <a href="/shtml/heart/@last.shtml" class="btn btn-default">上一篇&lt;&lt;</a>
-                        <a href="/shtml/heart/@next.shtml" class="btn btn-default">下一篇&gt;&gt;</a>
+                        <a href="/shtml/heart/@category/@last.shtml" class="btn btn-default">上一篇&lt;&lt;</a>
+                        <a href="/shtml/heart/@category/@next.shtml" class="btn btn-default">下一篇&gt;&gt;</a>
                     </section>
                 </article>
             </div>

@@ -69,15 +69,12 @@ public class UploadHandler : Handler
         Result.OriginFileName = uploadFileName;
 
         // 上传图片到又拍云
-        DateTime today = DateTime.Today;
-        string upYunPath = string.Format("{0}/{1}/{2}/{3}", _segment, today.Year, today.Month, today.Day);
+        string upYunPath = "/upload/image";
 
         UploadUpYun uuy = new UploadUpYun(Result, upYunPath);
         object model = uuy.Upload(uploadFileBytes, uploadFileName);
         this.WriteJson(model);
     }
-
-    private readonly string _segment = "/upload/segment";//ConfigurationManager.AppSettings["UpYun_SgmntSubPath"];  // "/upload/segment"
 
     private void WriteResult()
     {

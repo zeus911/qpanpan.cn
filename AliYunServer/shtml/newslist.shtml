@@ -1,12 +1,11 @@
-﻿<!--#include file="/htmls/head.html"-->
-<title>@title</title>
+<!--#include file="/htmls/head.html"-->
+<title>列表</title>
 </head>
 <body>
     <!--#include file="/htmls/nav.html"-->
-
     <style type="text/css">
-        .defaultLink a{color:#555;}/*修改链接的默认颜色*/
-        .articleList li { margin-top:5px;}/*设置ul中li的间距*/
+        .defaultLink a { color: #555; }/*修改链接的默认颜色*/
+        .articleList li { margin-top: 5px; }/*设置ul中li的间距*/
     </style>
     <main id="post-page" class="container   mainContent" role="main">
         <div class="row">
@@ -14,33 +13,22 @@
                 <article class="panel post tag-promise tag-javascript">
                     <header class="panel-heading post-header">
                         <h1 class="post-title">
-                            <span>心路历程</span>
+                            <span>列表</span>
                         </h1>
                     </header>
                     <section class="panel-body post-content">
                         <ul class="defaultLink list-unstyled articleList">
-                            <div class='row'><li><a href='http://www.qpanpan.cn/shtml/heart/1.shtml' target='_blank'>我们没有什么不同——献给考研过线或者没过线的同学！</a></li></div>
-                            <div class='row'><li><a href='http://www.qpanpan.cn/shtml/heart/2.shtml' target='_blank'>大一大三都在学习，让大四还在迷茫、打副本的同学情何以堪！</a></li></div>
-                            <div class='row'><li><a href='http://www.qpanpan.cn/shtml/heart/3.shtml' target='_blank'>如鹏过年不放假，撸着代码过除夕</a></li></div>
-                            <div class='row'><li><a href='http://www.qpanpan.cn/shtml/heart/4.shtml' target='_blank'>如鹏网参加上海张江高新区“移动互联网企业创业招聘沙龙”</a></li></div>
-                            <div class='row'><li><a href='http://www.qpanpan.cn/shtml/heart/5.shtml' target='_blank'>你想年入100万、50万还是20万，都能满足你</a></li></div>
-                            <div class='row'><li><a href='http://www.qpanpan.cn/shtml/heart/6.shtml' target='_blank'>训练营叶昭良同学的研究成果</a></li></div>
-                            <div class='row'><li><a href='http://www.qpanpan.cn/shtml/heart/7.shtml' target='_blank'>让大四还在迷茫的同学情何以堪，0120班开班了</a></li></div>
-                            <div class='row'><li><a href='http://www.qpanpan.cn/shtml/heart/8.shtml' target='_blank'>如鹏网在线编程训练营2015年第一个班开班啦</a></li></div>
-                            <div class='row'><li><a href='http://www.qpanpan.cn/shtml/heart/9.shtml' target='_blank'>我已离开传智播客，回归如鹏网</a></li></div>
-                        </ul>
+                            <div class='row'>
+                                <li><a href='http://qpanpan.cn/shtml/heart/2/1.shtml' target='_blank'>风景图片</a></li>
+                            </div>
+                            <div class='row'>
+                                <li><a href='http://qpanpan.cn/shtml/heart/3/2.shtml' target='_blank'>常用代码</a></li>
+                            </div>
                     </section>
                 </article>
-                <ul class='pagination col-md-12' style='width'>
-                    <li class='active'><a>1</a></li>
-                    <li>&nbsp;<a href='list_2.shtml' title='第2页'>2</a>&nbsp;</li>
-                    <li><a href='list_2.shtml' title='下页'>下页</a></li>
-                    <li><a href='list_2.shtml' title='尾页'>尾页</a></li>
-                </ul>
             </div>
         </div>
     </main>
-
     <!--#include file="/htmls/foot.html"-->
 </body>
 </html>
